@@ -11,6 +11,7 @@ class User {
    * */
   static setCurrent(user) {
     localStorage.user = JSON.stringify(user);
+    document.querySelector('.user-name').innerHTML = 'id: ' + User.current().id;
   }
 
   /**
@@ -35,17 +36,29 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch( data, callback = f => f ) {
+    if (User.current())
+      document.querySelector('.user-name').innerHTML = 'id: ' + User.current().id;
+
     const xhr = createRequest({
       method: 'GET',
       responseType: 'json',
       url: this.URL + '/current',
       data: data}, 
-      callback
+      (response) => {
+        callback(response)
+        if (response.success) {
+          // Если в результате есть данные об авторизованном пользователе, 
+          // обновить данные текущего пользователя (вызвать метод setCurrent)
+          User.setCurrent(response.user);
+        }
+        else {
+        // Если нет (success = false), удалить запись об авторизации (вызвать метод unsetCurrent)
+          User.unsetCurrent();
+          console.log(response);
+        }
+      }
     );
-    // Если в результате есть данные об авторизованном пользователе, 
-    // обновить данные текущего пользователя (вызвать метод setCurrent)
 
-    // Если нет (success = false), удалить запись об авторизации (вызвать метод unsetCurrent)
   }
 
   /**
@@ -60,11 +73,12 @@ class User {
       responseType: 'json',
       url: this.URL + '/login',
       data: data.data}, 
-      callback = (response) => {
-        if (response.user)
-          this.setCurrent(response.user);
-        else
-          console.log(response);
+      (response) => {
+          if (response.user)
+            User.setCurrent(response.user);
+          else
+            console.log(response);
+          callback(response);
       }
     );
 
@@ -81,7 +95,17 @@ class User {
       method: 'POST',
       responseType: 'json',
       url: this.URL + '/register',
-      data: data}, callback
+      data: data.data}, 
+      (response) => {
+        if (response.success) {
+          // После успешной авторизации User.setCurrent.
+          User.setCurrent(response.user);
+        }
+        else {
+          console.log(response.error);
+        }
+        callback(response);
+      }
     );
   }
 
@@ -90,29 +114,22 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout( data, callback = f => f ) {
+    // Какие data ожидает logout?
     createRequest({
       method: 'POST',
       responseType: 'json',
       url: this.URL + '/logout',
-      data: data}, callback
+      data: data},
+      callback = (response) => {
+        if (response.success) {
+          // После успешного выхода вызвать метод User.unsetCurrent.
+          User.unsetCurrent();
+
+        }
+        else
+          console.log(response);
+      }
     );
-  // После успешного выхода вызвать метод User.unsetCurrent.
-      this.unsetCurrent();
   }
+
 }
-
-// const data = {
-//   email: 'test@test.ru',
-//   password: 'abracadabra'
-// }
-
-// User.login( data, ( response ) => {
-//   console.log( response.user ); 
-// });
-
-// User.logout( data, (resp) => console.log('logout =',  resp.success));
-
-// User.unsetCurrent();
-// User.fetch(0, (resp) => console.log(resp));
-// {success: false, user: null, error: "Необходимо передать id, name и email пользователя"
-// User.setCurrent(data);

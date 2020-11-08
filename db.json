@@ -11,7 +11,37 @@
       "email": "test@test.ru",
       "password": "abracadabra",
       "id": "166m33398kh3ftbmw",
+      "isAuthorized": false
+    },
+    {
+      "id": "166m332kskh7gwbbr",
+      "isAuthorized": false
+    },
+    {
+      "id": "166m33210kh7hmfq0",
+      "isAuthorized": false
+    },
+    {
+      "id": "166m331nskh7i0wh5",
+      "isAuthorized": false
+    },
+    {
+      "id": "166m331ogkh7i2y21",
+      "isAuthorized": false
+    },
+    {
+      "name": "Никита",
+      "email": "npeplov@yandex.ru",
+      "password": "123",
+      "id": "166m338z4kh7i50ei",
       "isAuthorized": true
+    },
+    {
+      "name": "Никита 3",
+      "email": "betl99@rambler.ru",
+      "password": "123",
+      "id": "166m33afokh8m8gjg",
+      "isAuthorized": false
     }
   ],
   "accounts": [

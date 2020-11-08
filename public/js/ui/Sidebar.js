@@ -28,28 +28,32 @@ class Sidebar {
   /**
    * При нажатии на кнопку входа, показывает окно входа
    * (через найденное в App.getModal)
+   
    * При нажатии на кнопку регастрации показывает окно регистрации
+    
    * При нажатии на кнопку выхода вызывает User.logout и по успешному
    * выходу устанавливает App.setState( 'init' )
+    
    * */
   static initAuthLinks() {
     const buttons = Array.from(document.querySelectorAll('li a'));
 
-    buttons[0].addEventListener('click', open);
-    buttons[2].addEventListener('click', logout)
+    buttons[0].addEventListener('click', login);
+    buttons[1].addEventListener('click', register);
+    buttons[2].addEventListener('click', logout);
 
-
-    function open() {
+    function login() {
       App.getModal( 'login' ).open();
     }
+
+    function register() {
+      App.getModal( 'register' ).open();
+    }
+ 
     function logout() {
       User.logout();
+      App.setState('init');
     }
   }
 
 }
-
-// клик по кнопке Вход.
-/* <li class="menu-item menu-item_login">
-                        <a href="#">Вход */
-// где регистрация события клик по этому элементу?

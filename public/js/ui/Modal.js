@@ -15,9 +15,7 @@ class Modal {
   constructor( element ) {
     // Если передан пустой элемент в конструктор, должна быть выброшена ошибка.
 
-    // Сохраните переданный элемент в свойство element
     this.element = element;
-    // Вызовите метод registerEvents()
     this.registerEvents(this.element);
   }
 
@@ -39,6 +37,7 @@ class Modal {
   onClose( e ) {
     this.close(this.element)
   }
+
   /**
    * Удаляет обработчики событий
    * */
@@ -49,6 +48,7 @@ class Modal {
       button.removeEventListener('click', this.onClose)
     })
   }
+
   /**
    * Открывает окно: устанавливает CSS-свойство display
    * со значением «block»
@@ -56,6 +56,7 @@ class Modal {
   open() {
     this.element.style.display = 'block';
   }
+  
   /**
    * Закрывает окно: удаляет CSS-свойство display
    * */

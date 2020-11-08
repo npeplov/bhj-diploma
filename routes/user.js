@@ -79,6 +79,7 @@ router.post("/logout", function(request, response) {
 
 //запрос получения текущего пользователя
 router.get("/current", function(request, response) {
+    console.log(request);
     const db = low(new FileSync('db.json'));// получение БД
     let { id } = request.query; // получение id пользователя из запроса
     //получение из БД пользователя с переданным id
@@ -94,6 +95,8 @@ router.get("/current", function(request, response) {
     else{
         //отправка ответа с отсутствием пользователя
         response.json({ success: false, user: null, error: 'Необходимо передать id, name и email пользователя' });
+
+        // response.json(request)
     }
 })
 
