@@ -33,12 +33,13 @@ const createRequest = (options, callback) => {
 
     xhr.onload = () => {
         if (xhr.response.success) {
-            console.log(xhr.response);
-            callback(xhr.response);
+            const err = null;
+            callback(err, xhr.response);
+            // console.log('ok', xhr.response);
         }
         else {
-            console.log(xhr.response);
-            callback(xhr.response);
+            console.log('ERROR', xhr.response);
+            // callback(xhr.response.error);
         }
     }
 

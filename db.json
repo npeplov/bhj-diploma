@@ -34,13 +34,20 @@
       "email": "npeplov@yandex.ru",
       "password": "123",
       "id": "166m338z4kh7i50ei",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "name": "Никита 3",
       "email": "betl99@rambler.ru",
       "password": "123",
       "id": "166m33afokh8m8gjg",
+      "isAuthorized": false
+    },
+    {
+      "name": "Никита 555",
+      "email": "npeplov@yandex555.ru",
+      "password": "123",
+      "id": "166m33a9gkh96dz4y",
       "isAuthorized": false
     }
   ],

@@ -36,29 +36,32 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch( data, callback = f => f ) {
-    if (User.current())
+    if (User.current()) {
       document.querySelector('.user-name').innerHTML = 'id: ' + User.current().id;
 
-    const xhr = createRequest({
-      method: 'GET',
-      responseType: 'json',
-      url: this.URL + '/current',
-      data: data}, 
-      (response) => {
-        callback(response)
-        if (response.success) {
-          // Если в результате есть данные об авторизованном пользователе, 
-          // обновить данные текущего пользователя (вызвать метод setCurrent)
-          User.setCurrent(response.user);
-        }
-        else {
-        // Если нет (success = false), удалить запись об авторизации (вызвать метод unsetCurrent)
-          User.unsetCurrent();
-          console.log(response);
-        }
-      }
-    );
+      const xhr = createRequest({
+        method: 'GET',
+        responseType: 'json',
+        url: this.URL + '/current',
+        data: data}, 
 
+        (err, response) => {
+          if (response) {
+            // Если в результате есть данные об авторизованном пользователе, 
+            // обновить данные текущего пользователя (вызвать метод setCurrent)
+            User.setCurrent(response.user);
+          }
+          else {
+          // Если нет (success = false), удалить запись об авторизации (вызвать метод unsetCurrent)
+            User.unsetCurrent();
+            console.log(err);
+          }
+          
+          callback(err, response);
+        });
+
+    }
+    
   }
 
   /**
@@ -73,12 +76,13 @@ class User {
       responseType: 'json',
       url: this.URL + '/login',
       data: data.data}, 
-      (response) => {
-          if (response.user)
+      (err, response) => {
+          if (response)
             User.setCurrent(response.user);
           else
-            console.log(response);
-          callback(response);
+            console.log(err);
+
+          callback(err, response);
       }
     );
 
@@ -96,15 +100,14 @@ class User {
       responseType: 'json',
       url: this.URL + '/register',
       data: data.data}, 
-      (response) => {
-        if (response.success) {
+
+      (err, response) => {
+        if (response) {
           // После успешной авторизации User.setCurrent.
           User.setCurrent(response.user);
         }
-        else {
-          console.log(response.error);
-        }
-        callback(response);
+
+        callback(err, response);
       }
     );
   }
@@ -120,14 +123,16 @@ class User {
       responseType: 'json',
       url: this.URL + '/logout',
       data: data},
-      callback = (response) => {
-        if (response.success) {
+
+      callback = (err, response) => {
+        if (response) {
           // После успешного выхода вызвать метод User.unsetCurrent.
           User.unsetCurrent();
 
         }
         else
-          console.log(response);
+          console.log(err);
+
       }
     );
   }
