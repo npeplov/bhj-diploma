@@ -11,16 +11,18 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list( data, callback = (f) => f ) {
-    createRequest( {
-      method: 'GET',
-      responseType: 'json',
-      url: this.URL,
-      data },
-      (err, response) => {
-        if (err)
-          console.log(err);
-      callback (err, response);
-    });
+    if (data) {
+      createRequest( {
+        method: 'GET',
+        responseType: 'json',
+        url: this.URL,
+        data: data },
+        (err, response) => {
+          if (err)
+            console.log(err);
+        callback (err, response);
+      });
+    }
   }
 
   /**
@@ -33,8 +35,7 @@ class Entity {
       method: 'POST',
       responseType: 'json',
       url: this.URL,
-      data: Object.assign({_method: 'PUT'}, data.data)},
-
+      data: Object.assign( {_method: 'PUT'}, data.data) },
       (err, response) => {
         if (err)
           console.log(err);
@@ -67,17 +68,18 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove( id = '', data, callback = f => f ) {
-
+    // Account.remove(166m33a1okhdfv1qo, User.current())
     createRequest({
-      method: 'POST ',
+      method: 'POST',
       responseType: 'json',
-      data: Object.assign({_method: 'DELETE'}, data.data),
-
+      url: this.URL,
+      data: Object.assign({_method: 'DELETE', id}, data),
       // К данным, передаваемых в параметре data, необходимо добавить идентификатор id 
       // и свойство _method со значением DELETE
-
-    }, callback)
-
+      }, 
+      (err, response) => { callback(err, response) }
+    )
   }
+
 }
 

@@ -30,29 +30,52 @@ class TransactionsPage {
    * */
   registerEvents() {
     this.element.querySelector('.remove-account').onclick = () => {
-      this.removeAccount;
+      this.removeAccount();
     }
+    const transactions = this.element.querySelectorAll('.transaction__remove');
+    // console.log(transactions);
+    transactions.forEach( (transaction) => {
+      transaction.onclick = () => {
+        this.removeTransaction()
+      }
+    }
+    )
   }
 
   /**
-   * Удаляет счёт. Необходимо показать диаголовое окно (с помощью confirm())
-   * Если пользователь согласен удалить счёт, вызовите
-   * Account.remove, а также TransactionsPage.clear с
+   * Удаляет счёт. Если согласен - удалить
+     вызовите Account.remove, 
+     а также TransactionsPage.clear с
    * пустыми данными для того, чтобы очистить страницу.
    * По успешному удалению необходимо вызвать метод App.update()
    * для обновления приложения
    * */
   removeAccount() {
-
+    if (this.lastOptions) {
+      const userAgree = confirm('Are you sure?');
+      if (userAgree) {
+        Account.remove(this.lastOptions.account_id, '',
+          (err, response) => {
+            if (response) {
+              App.update();
+              this.clear();
+            }
+            else
+              console.log(err);
+          }
+        );
+        this.clear();
+      }
+    }
   }
-
   /**
    * Удаляет транзакцию (доход или расход). Требует
    * подтверждеия действия (с помощью confirm()).
    * По удалению транзакции вызовите метод App.update()
    * */
   removeTransaction( id ) {
-
+    console.log(id, this);
+    console.log(1);
   }
 
   /**
@@ -65,16 +88,13 @@ class TransactionsPage {
     if (options) {
       Account.get('', '', 
         (err, response) => {
-          if (err)
-            console.log(err);
-          else {
+          if (response) {
             const acc = response.data.find((account) => 
               account.id === options.account_id)
             this.renderTitle(acc.name);
-
-            // Метод получает список доходов и расходов пользователя через Transaction.list
-            //  и отрисовывает данные через TransactionsPage.renderTransactions
           }
+          else
+            console.log(err);
         }
       );
       Transaction.list(options, 
@@ -82,7 +102,8 @@ class TransactionsPage {
           if (response)
             this.renderTransactions(response.data);
         }
-      )
+      );
+      this.lastOptions = options;
     }
   }
 
@@ -92,7 +113,9 @@ class TransactionsPage {
    * Устанавливает заголовок: «Название счёта»
    * */
   clear() {
-
+    this.element.querySelector('.content-title').innerText = "Название счёта";
+    this.renderTransactions([]);
+    this.lastOptions = null;
   }
 
   /**

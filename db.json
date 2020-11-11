@@ -5,7 +5,7 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1",
-      "isAuthorized": false
+      "isAuthorized": true
     },
     {
       "email": "test@test.ru",
@@ -28,35 +28,9 @@
     {
       "id": "166m331ogkh7i2y21",
       "isAuthorized": false
-    },
-    {
-      "name": "Никита",
-      "email": "npeplov@yandex.ru",
-      "password": "123",
-      "id": "166m338z4kh7i50ei",
-      "isAuthorized": false
-    },
-    {
-      "name": "Никита 3",
-      "email": "betl99@rambler.ru",
-      "password": "123",
-      "id": "166m33afokh8m8gjg",
-      "isAuthorized": false
-    },
-    {
-      "name": "Никита 555",
-      "email": "npeplov@yandex555.ru",
-      "password": "123",
-      "id": "166m33a9gkh96dz4y",
-      "isAuthorized": false
     }
   ],
   "accounts": [
-    {
-      "name": "Банк",
-      "user_id": "1",
-      "id": "1"
-    },
     {
       "name": "Магазин",
       "user_id": "1",
@@ -66,6 +40,11 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
+    },
+    {
+      "name": "test 5",
+      "user_id": "1",
+      "id": "166m334c4khdhxn47"
     }
   ],
   "transactions": [
@@ -203,6 +182,46 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "166m332hkkhd8xbz1",
+      "type": "INCOME",
+      "name": "Доход 1",
+      "sum": 100,
+      "account_id": "166m33324khd85hf8",
+      "created_at": "2020-11-11T10:13:54.012Z"
+    },
+    {
+      "id": "166m335lokhdfy0pi",
+      "type": "INCOME",
+      "name": "Доход 30",
+      "sum": 230,
+      "account_id": "166m33a1okhdfv1qo",
+      "created_at": "2020-11-11T13:30:23.381Z"
+    },
+    {
+      "id": "166m334w0khdfzivl",
+      "type": "INCOME",
+      "name": "Доход 31",
+      "sum": 231,
+      "account_id": "166m33a1okhdfv1qo",
+      "created_at": "2020-11-11T13:31:33.584Z"
+    },
+    {
+      "id": "166m334j0khdhxz32",
+      "type": "INCOME",
+      "name": "Доход 26",
+      "sum": 26,
+      "account_id": "166m334c4khdhxn47",
+      "created_at": "2020-11-11T14:26:20.509Z"
+    },
+    {
+      "id": "166m339egkhdi9f48",
+      "type": "INCOME",
+      "name": "Доход 35",
+      "sum": 35,
+      "account_id": "2",
+      "created_at": "2020-11-11T14:35:14.503Z"
     }
   ]
 }

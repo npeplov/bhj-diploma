@@ -36,11 +36,8 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch( data, callback = f => f ) {
-<<<<<<< HEAD
-=======
     if (User.current()) {
       document.querySelector('.user-name').innerHTML = 'id: ' + User.current().id;
->>>>>>> 3ac9921ef17dea5de69fb6db31606712354e2126
 
       const xhr = createRequest({
         method: 'GET',
@@ -62,11 +59,7 @@ class User {
           
           callback(err, response);
         });
-<<<<<<< HEAD
-=======
-
     }
->>>>>>> 3ac9921ef17dea5de69fb6db31606712354e2126
     
   }
 

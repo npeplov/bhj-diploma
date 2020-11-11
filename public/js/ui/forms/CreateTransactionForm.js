@@ -22,6 +22,7 @@ class CreateTransactionForm extends AsyncForm {
     (err, response) => {
       if (response) {
         const select = this.element.querySelector('select');
+        select.innerHTML = '';
 
         response.data.forEach( (account) => {
           select.innerHTML += `
@@ -43,9 +44,10 @@ class CreateTransactionForm extends AsyncForm {
   onSubmit( options ) {
     Transaction.create(options, 
       (err, response) => {
-        if (response)
-          console.log(response);
+        if (response) {
           App.getModal('newIncome').close();
+          App.update();
+        }
       }
     )
   }
