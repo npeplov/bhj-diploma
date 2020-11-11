@@ -11,7 +11,7 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    this.element = element;
   }
 
   /**
@@ -22,6 +22,7 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update() {
-
+    if (User.current()) 
+      document.querySelector('.user-name').innerHTML = 'id: ' + User.current().id;
   }
 }

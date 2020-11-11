@@ -3,6 +3,7 @@
  * на сервер.
  * */
 const createRequest = (options, callback) => {
+    console.log(options);
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     if (options.responseType)
@@ -38,8 +39,13 @@ const createRequest = (options, callback) => {
             // console.log('ok', xhr.response);
         }
         else {
+<<<<<<< HEAD
+            // console.log('ERROR', xhr.response);
+            callback(xhr.response.error);
+=======
             console.log('ERROR', xhr.response);
             // callback(xhr.response.error);
+>>>>>>> 3ac9921ef17dea5de69fb6db31606712354e2126
         }
     }
 

@@ -11,15 +11,17 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list( data, callback = (f) => f ) {
-    return createRequest( {
+    createRequest( {
       method: 'GET',
       responseType: 'json',
       url: this.URL,
-      data }, callback )
+      data },
+      (err, response) => {
+        if (err)
+          console.log(err);
+      callback (err, response);
+    });
   }
-
-//     url: '', method: 'GET', responseType: 'json', callback: (response) => {console.log(response)},
-//     data: { mail: 'ivan@biz.pro', password: 'odinodin'}
 
   /**
    * Создаёт счёт или доход/расход с помощью запроса
@@ -27,13 +29,17 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create( data, callback = f => f ) {
-    return createRequest({
+    createRequest({
       method: 'POST',
       responseType: 'json',
+      url: this.URL,
+      data: Object.assign({_method: 'PUT'}, data.data)},
 
-// К данным, передаваемых в параметре data, необходимо добавить свойство _method со значением PUT
-
-      data}, callback)
+      (err, response) => {
+        if (err)
+          console.log(err);
+      callback(err, response);
+    });
   }
 
   /**
@@ -41,14 +47,19 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static get( id = '', data, callback = f => f ) {
-
-//id задаёт идентификатор записи (например, идентификатор счёта или дохода/расхода; 
-//это станет актуально для классов Account и Transaction)
-
-    return createRequest({
+  //id задаёт идентификатор записи (например, идентификатор счёта или дохода/расхода; 
+  //это станет актуально для классов Account и Transaction)
+    createRequest({
       method: 'GET',
       responseType: 'json',
-      data}, callback)
+      url: this.URL,
+      data
+    }, 
+    (err, response) => {
+      if (err)
+        console.log(err);
+      callback(err, response)
+    })
   }
 
   /**
@@ -57,15 +68,15 @@ class Entity {
    * */
   static remove( id = '', data, callback = f => f ) {
 
-    return createRequest({
+    createRequest({
       method: 'POST ',
       responseType: 'json',
-      data
+      data: Object.assign({_method: 'DELETE'}, data.data),
 
       // К данным, передаваемых в параметре data, необходимо добавить идентификатор id 
       // и свойство _method со значением DELETE
 
-      }, callback)
+    }, callback)
 
   }
 }
