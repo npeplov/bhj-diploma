@@ -12,7 +12,16 @@ const createRequest = (options, callback) => {
 
     xhr.withCredentials = true;
 
-    if (options.method === 'GET') {
+    // if (options.method === 'GET')
+    //     console.log(options);
+
+    if (options.method === 'GET' && options.id) {
+        let url = options.url + '/' + options.id
+        xhr.open(options.method, url);
+        xhr.send();
+    }
+
+    else if (options.method === 'GET') {
         let url = options.url + "?";
         for (let key in options.data)
             url += key + "=" + options.data[key] + "&";
@@ -39,7 +48,7 @@ const createRequest = (options, callback) => {
             // console.log('ok', xhr.response);
         }
         else {
-            // console.log('ERROR', xhr.response);
+            console.log('ERROR', xhr.response);
             callback(xhr.response);
         }
     }

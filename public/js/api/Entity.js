@@ -54,11 +54,14 @@ class Entity {
       method: 'GET',
       responseType: 'json',
       url: this.URL,
-      data
+      data: data,
+      id,
     }, 
     (err, response) => {
       if (err)
         console.log(err);
+      else
+        // console.log(response);
       callback(err, response)
     })
   }
@@ -68,7 +71,6 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove( id = '', data, callback = f => f ) {
-    // Account.remove(166m33a1okhdfv1qo, User.current())
     createRequest({
       method: 'POST',
       responseType: 'json',

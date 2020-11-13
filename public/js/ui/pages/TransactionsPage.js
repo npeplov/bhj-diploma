@@ -11,15 +11,20 @@ class TransactionsPage {
    * через registerEvents()
    * */
   constructor( element ) {
-    this.element = element;
-    this.registerEvents();
+    if (element)
+      this.element = element;
+    else 
+      throw new Error('Элемент не элемент')
   }
 
   /**
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-    this.render();
+    if (this.lastOptions)
+      this.render(this.lastOptions);
+    else
+      this.render();
   }
 
   /**
@@ -36,7 +41,7 @@ class TransactionsPage {
     // console.log(transactions);
     transactions.forEach( (transaction) => {
       transaction.onclick = () => {
-        this.removeTransaction()
+        this.removeTransaction(transaction.dataset.id)
       }
     }
     )
@@ -74,8 +79,17 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update()
    * */
   removeTransaction( id ) {
-    console.log(id, this);
-    console.log(1);
+    const userAgree = confirm('Are you sure?');
+    if (userAgree) {
+      Transaction.remove(id, '', (err, response) => {
+        if (response) {
+          this.update();
+        }
+        else
+          console.log(err);
+        }
+      )
+    }
   }
 
   /**
@@ -86,23 +100,19 @@ class TransactionsPage {
    * */
   render( options ) {
     if (options) {
-      Account.get('', '', 
+      Account.get(options.account_id, '', 
         (err, response) => {
           if (response) {
-            const acc = response.data.find((account) => 
-              account.id === options.account_id)
-            this.renderTitle(acc.name);
+            this.renderTitle(response.data.name);
           }
           else
             console.log(err);
-        }
+          }
       );
-      Transaction.list(options, 
+      Transaction.list(options,
         (err, response) => {
-          if (response)
-            this.renderTransactions(response.data);
-        }
-      );
+          this.renderTransactions(response.data);
+        });
       this.lastOptions = options;
     }
   }
@@ -174,5 +184,6 @@ class TransactionsPage {
     data.forEach( (transaction) => {
       content.innerHTML += this.getTransactionHTML(transaction);
     })
+    this.registerEvents();
   }
 }

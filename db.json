@@ -208,20 +208,20 @@
       "created_at": "2020-11-11T13:31:33.584Z"
     },
     {
-      "id": "166m334j0khdhxz32",
-      "type": "INCOME",
-      "name": "Доход 26",
-      "sum": 26,
+      "id": "166m33a0ckhfs7oh0",
+      "type": "EXPENSE",
+      "name": "Доход 1",
+      "sum": 100,
       "account_id": "166m334c4khdhxn47",
-      "created_at": "2020-11-11T14:26:20.509Z"
+      "created_at": "2020-11-13T04:49:21.827Z"
     },
     {
-      "id": "166m339egkhdi9f48",
+      "id": "166m334agkhfsbz4g",
       "type": "INCOME",
-      "name": "Доход 35",
-      "sum": 35,
-      "account_id": "2",
-      "created_at": "2020-11-11T14:35:14.503Z"
+      "name": "Доход 31",
+      "sum": 231,
+      "account_id": "166m334c4khdhxn47",
+      "created_at": "2020-11-13T04:52:42.255Z"
     }
   ]
 }
