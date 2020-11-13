@@ -5,7 +5,7 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1",
-      "isAuthorized": true
+      "isAuthorized": false
     },
     {
       "email": "test@test.ru",
@@ -28,6 +28,13 @@
     {
       "id": "166m331ogkh7i2y21",
       "isAuthorized": false
+    },
+    {
+      "name": "Mail",
+      "email": "mail@mail",
+      "password": "mail",
+      "id": "166m337tckhgamv5x",
+      "isAuthorized": true
     }
   ],
   "accounts": [
@@ -45,6 +52,11 @@
       "name": "test 6",
       "user_id": "1",
       "id": "166m334akkhft4wy4"
+    },
+    {
+      "name": "Wallet",
+      "user_id": "166m337tckhgamv5x",
+      "id": "166m331hwkhgankma"
     }
   ],
   "transactions": [
