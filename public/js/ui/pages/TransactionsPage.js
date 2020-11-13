@@ -140,7 +140,9 @@ class TransactionsPage {
    * в формат «10 марта 2019 г. в 03:20»
    * */
   formatDate( date ) {
-
+    const result = new Date(date);
+    return result.toLocaleString('ru', { day:'2-digit' , month: 'long', year: 'numeric'}) + 
+    ' в ' + result.toLocaleString('ru', { hour:'2-digit' , minute: '2-digit'});
   }
 
   /**
@@ -156,7 +158,7 @@ class TransactionsPage {
           </div>
           <div class="transaction__info">
               <h4 class="transaction__title">${item.name}</h4>
-              <div class="transaction__date">${item.created_at}</div>
+              <div class="transaction__date">${this.formatDate(item.created_at)}</div>
           </div>
         </div>
         <div class="col-md-3">

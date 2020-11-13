@@ -42,9 +42,9 @@
       "id": "3"
     },
     {
-      "name": "test 5",
+      "name": "test 6",
       "user_id": "1",
-      "id": "166m334c4khdhxn47"
+      "id": "166m334akkhft4wy4"
     }
   ],
   "transactions": [
@@ -222,6 +222,22 @@
       "sum": 100,
       "account_id": "166m334c4khdhxn47",
       "created_at": "2020-11-13T05:03:59.968Z"
+    },
+    {
+      "id": "166m339h0khft548u",
+      "type": "income",
+      "name": "Доход 1",
+      "sum": 100,
+      "account_id": "166m334akkhft4wy4",
+      "created_at": "2020-11-13T05:15:21.917Z"
+    },
+    {
+      "id": "166m33c0khfuakx8",
+      "type": "income",
+      "name": "Доход 1",
+      "sum": 100,
+      "account_id": "166m334akkhft4wy4",
+      "created_at": "2020-11-13T05:47:36.427Z"
     }
   ]
 }
