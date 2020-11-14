@@ -29,19 +29,18 @@ class TransactionsPage {
 
   removeAccount() {
     if (this.lastOptions) {
+      this.clear();
       const userAgree = confirm('Are you sure?');
       if (userAgree) {
         Account.remove(this.lastOptions.account_id, '',
           (err, response) => {
             if (response) {
               App.update();
-              this.clear();
             }
             else
               console.log(err);
           }
         );
-        this.clear();
       }
     }
   }
@@ -80,7 +79,7 @@ class TransactionsPage {
   }
 
   clear() {
-    this.element.querySelector('.content-title').innerText = "Название счёта";
+    this.renderTitle("Название счёта");
     this.renderTransactions([]);
     this.lastOptions = null;
   }
