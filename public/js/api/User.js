@@ -35,13 +35,6 @@ class User {
     }
     
   }
-
-  /**
-   * Производит попытку авторизации.
-   * После успешной авторизации необходимо
-   * сохранить пользователя через метод
-   * User.setCurrent.
-   * */
   static login( data, callback = f => f ) {
     const xhr = createRequest({
       method: 'POST',
@@ -82,7 +75,7 @@ class User {
    * Производит выход из приложения. После успешного
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
-  static logout( data, callback = f => f ) {
+  static logout( data, initAuthLinksCallback = f => f ) {
     // Какие data ожидает logout?
     createRequest({
       method: 'POST',
@@ -90,10 +83,11 @@ class User {
       url: this.URL + '/logout',
       data: data},
 
-      callback = (err, response) => {
+      (err, response) => {
         if (response) {
           User.unsetCurrent();
         }
+        initAuthLinksCallback(err, response);
       }
     );
   }

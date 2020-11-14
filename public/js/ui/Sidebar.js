@@ -51,8 +51,10 @@ class Sidebar {
     }
  
     function logout() {
-      User.logout();
-      App.setState('init');
+      User.logout('', (err, response) => {
+        if (response)
+          App.setState('init');
+      });
     }
   }
 
