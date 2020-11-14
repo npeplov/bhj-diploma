@@ -6,32 +6,29 @@ class Modal {
       this.registerEvents(this.element);
     }
     else
-      throw new Error('Элемент не элемент');
+      throw new Error('Это не те дроиды, которых вы ищете');
   }
 
   registerEvents() {
-    const close = this.element.querySelectorAll('[data-dismiss]');
-    close[0].addEventListener('click', () => {this.close()});
-    close[1].addEventListener('click', () => {this.close()});
+    this.element.addEventListener('click', this.onClose.bind(this));
   }
 
   onClose( e ) {
-    this.close(this.element)
+    if (e.target.closest('[data-dismiss="modal"]')) {
+      this.close(this.element);
+      this.unregisterEvents();
+    }
   }
 
   unregisterEvents() {
-    const buttons = Array.from(this.element.querySelectorAll('[data-dismiss="modal"]'));
-
-    buttons.forEach( (button) => {
-      button.removeEventListener('click', this.onClose)
-    })
+    this.element.removeEventListener('click', this.onClose.bind(this));
   }
 
   open() {
     this.element.style.display = 'block';
   }
 
-  close(){
+  close() {
     this.element.style.display = '';
   }
 }
