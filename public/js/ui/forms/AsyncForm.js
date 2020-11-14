@@ -10,10 +10,14 @@ class AsyncForm {
   }
 
   registerEvents() {
-    this.element.onsubmit = (e) => { 
-      e.preventDefault();
-      this.submit();
+    if ( this.element.checkValidity() ) {
+      this.element.onsubmit = (e) => { 
+        e.preventDefault();
+        this.submit();
+      }
     }
+    else
+      return;
   }
 
   getData() {
