@@ -1,15 +1,5 @@
-/**
- * Класс TransactionsPage управляет
- * страницей отображения доходов и
- * расходов конкретного счёта
- * */
 class TransactionsPage {
-  /**
-   * Если переданный элемент не существует,
-   * необходимо выкинуть ошибку.
-   * Сохраняет переданный элемент и регистрирует события
-   * через registerEvents()
-   * */
+
   constructor( element ) {
     if (element)
       this.element = element;
@@ -17,9 +7,6 @@ class TransactionsPage {
       throw new Error('Элемент не элемент')
   }
 
-  /**
-   * Вызывает метод render для отрисовки страницы
-   * */
   update() {
     if (this.lastOptions)
       this.render(this.lastOptions);
@@ -27,18 +14,11 @@ class TransactionsPage {
       this.render();
   }
 
-  /**
-   * Отслеживает нажатие на кнопку удаления транзакции
-   * и удаления самого счёта. Внутри обработчика пользуйтесь
-   * методами TransactionsPage.removeTransaction и
-   * TransactionsPage.removeAccount соответственно
-   * */
   registerEvents() {
     this.element.querySelector('.remove-account').onclick = () => {
       this.removeAccount();
     }
     const transactions = this.element.querySelectorAll('.transaction__remove');
-    // console.log(transactions);
     transactions.forEach( (transaction) => {
       transaction.onclick = () => {
         this.removeTransaction(transaction.dataset.id)
@@ -47,14 +27,6 @@ class TransactionsPage {
     )
   }
 
-  /**
-   * Удаляет счёт. Если согласен - удалить
-     вызовите Account.remove, 
-     а также TransactionsPage.clear с
-   * пустыми данными для того, чтобы очистить страницу.
-   * По успешному удалению необходимо вызвать метод App.update()
-   * для обновления приложения
-   * */
   removeAccount() {
     if (this.lastOptions) {
       const userAgree = confirm('Are you sure?');
@@ -73,11 +45,7 @@ class TransactionsPage {
       }
     }
   }
-  /**
-   * Удаляет транзакцию (доход или расход). Требует
-   * подтверждеия действия (с помощью confirm()).
-   * По удалению транзакции вызовите метод App.update()
-   * */
+
   removeTransaction( id ) {
     const userAgree = confirm('Are you sure?');
     if (userAgree) {
@@ -92,12 +60,6 @@ class TransactionsPage {
     }
   }
 
-  /**
-   * С помощью Account.get() получает название счёта и отображает
-   * его через TransactionsPage.renderTitle.
-   * Получает список Transaction.list и полученные данные передаёт
-   * в TransactionsPage.renderTransactions()
-   * */
   render( options ) {
     if (options) {
       Account.get(options.account_id, '', 
@@ -117,38 +79,22 @@ class TransactionsPage {
     }
   }
 
-  /**
-   * Очищает страницу. Вызывает
-   * TransactionsPage.renderTransactions() с пустым массивом.
-   * Устанавливает заголовок: «Название счёта»
-   * */
   clear() {
     this.element.querySelector('.content-title').innerText = "Название счёта";
     this.renderTransactions([]);
     this.lastOptions = null;
   }
 
-  /**
-   * Устанавливает заголовок в элемент .content-title
-   * */
   renderTitle( name ) {
     this.element.querySelector('.content-title').innerText = name;
   }
 
-  /**
-   * Форматирует дату в формате 2019-03-10 03:20:41 (строка)
-   * в формат «10 марта 2019 г. в 03:20»
-   * */
   formatDate( date ) {
     const result = new Date(date);
     return result.toLocaleString('ru', { day:'2-digit' , month: 'long', year: 'numeric'}) + 
     ' в ' + result.toLocaleString('ru', { hour:'2-digit' , minute: '2-digit'});
   }
 
-  /**
-   * Формирует HTML-код транзакции (дохода или расхода).
-   * item - объект с информацией о транзакции
-   * */
   getTransactionHTML( item ) {
     return `
     <div class="transaction transaction_${item.type} row">
@@ -175,10 +121,6 @@ class TransactionsPage {
     `
   }
 
-  /**
-   * Отрисовывает список транзакций на странице
-   * используя getTransactionHTML
-   * */
   renderTransactions( data ) {
     const content = this.element.querySelector('.content');
     content.innerHTML = '';

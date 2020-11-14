@@ -14,11 +14,12 @@ class Entity {
   }
 
   static create( data, callback = f => f ) {
+    console.log(data);
     createRequest({
       method: 'POST',
       responseType: 'json',
       url: this.URL,
-      data: Object.assign( {_method: 'PUT'}, data.data)},
+      data: Object.assign( {_method: 'PUT'}, data)},
       (err, response) => { callback(err, response) }
     );
   }

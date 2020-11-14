@@ -49,12 +49,6 @@ class User {
     );
   }
 
-  /**
-   * Производит попытку регистрации пользователя.
-   * После успешной авторизации необходимо
-   * сохранить пользователя через метод
-   * User.setCurrent.
-   * */
   static register( data, callback = f => f ) {
     const xhr = createRequest({
       method: 'POST',
@@ -71,10 +65,6 @@ class User {
     );
   }
 
-  /**
-   * Производит выход из приложения. После успешного
-   * выхода необходимо вызвать метод User.unsetCurrent
-   * */
   static logout( data, initAuthLinksCallback = f => f ) {
     // Какие data ожидает logout?
     createRequest({
