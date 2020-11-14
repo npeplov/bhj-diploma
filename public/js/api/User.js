@@ -54,7 +54,7 @@ class User {
       method: 'POST',
       responseType: 'json',
       url: this.URL + '/register',
-      data: data.data}, 
+      data: data}, 
 
       (err, response) => {
         if (response) {
