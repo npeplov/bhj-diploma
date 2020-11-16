@@ -1,35 +1,37 @@
 class TransactionsPage {
 
   constructor( element ) {
-    if (element)
+    if (element) {
       this.element = element;
+      this.registerEvents();
+    }
     else 
       throw new Error('Элемент не элемент')
   }
 
   update() {
-    if (this.lastOptions)
+    if (this.lastOptions) {
       this.render(this.lastOptions);
+    }
     else
       this.render();
   }
 
   registerEvents() {
     this.element.addEventListener('click', del.bind(this));
-    // Окно confirm перехватывает выполнение скрипта и
-    // поэтому иногда нужно 2 раза кликать на Ок, Отмена или Esc
 
     function del(e) {
+      if (!e.target.closest('button'))
+        return
+
       const button = e.target.closest('button');
       if (button.classList.contains('remove-account'))
         this.removeAccount();
       
-      if (button.classList.contains('transaction__remove')) {
-        console.log(e.target);
+      else if (button.classList.contains('transaction__remove')) {
         this.removeTransaction(button.dataset.id);
       }
     }
-
 
   }
 
@@ -39,11 +41,11 @@ class TransactionsPage {
 
     const userAgree = confirm('Are you sure?');
     if (userAgree) {
-      Account.remove(this.lastOptions.account_id, '',
+      Account.remove(this.lastOptions.account_id, {},
         (err, response) => {
           if (response) {
-            App.update();
             this.clear();
+            App.update();
           }
           else
             console.log(err);
@@ -54,9 +56,10 @@ class TransactionsPage {
   removeTransaction( id ) {
     const userAgree = confirm('Are you sure?');
     if (userAgree) {
-      Transaction.remove(id, {}, (err, response) => {
+      Transaction.remove(id, {}, 
+        (err, response) => {
         if (response) {
-          this.update();
+          App.update();
         }
         else
           console.log(err);
@@ -133,6 +136,5 @@ class TransactionsPage {
     data.forEach( (transaction) => {
       content.innerHTML += this.getTransactionHTML(transaction);
     })
-    this.registerEvents();
   }
 }

@@ -6,7 +6,7 @@ const createRequest = (options, callback) => {
     xhr.setRequestHeader = options.headers;
 
     xhr.withCredentials = true;
-    let url, formData;
+    let url, formData = {};
 
     if (options.method === 'GET' && options.id) {
         url = options.url + '/' + options.id;
@@ -36,9 +36,11 @@ const createRequest = (options, callback) => {
             callback(null, xhr.response);
         }
         else {
-            callback(xhr.response);
+            return callback(xhr.response);
         }
     }
+    xhr.onerror = () => {alert('Ошибка сервера');}
+
     return xhr.response;
 }
 

@@ -65,7 +65,6 @@ class User {
   }
 
   static logout( data, initAuthLinksCallback = f => f ) {
-    // Какие data ожидает logout?
     createRequest({
       method: 'POST',
       responseType: 'json',

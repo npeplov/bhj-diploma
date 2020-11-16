@@ -8,6 +8,7 @@ class LoginForm extends AsyncForm {
         }
         else
           console.log('error:', err);
+          this.element.reset();
       });
   }
 }

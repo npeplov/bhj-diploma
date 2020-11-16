@@ -19,6 +19,8 @@ class CreateTransactionForm extends AsyncForm {
           select.innerHTML += `<option value="${account.id}">${account.name}</option>`
         });
       }
+      else
+        console.log(err);
     }
     );
   }
@@ -34,6 +36,8 @@ class CreateTransactionForm extends AsyncForm {
           else if (options.type === 'income')
             App.getModal('newIncome').close();
         }
+        else
+          console.log(err);
       }
     )
   }
