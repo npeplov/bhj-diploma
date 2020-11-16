@@ -15,67 +15,73 @@ class TransactionsPage {
   }
 
   registerEvents() {
-    this.element.querySelector('.remove-account').onclick = () => {
-      this.removeAccount();
-    }
-    const transactions = this.element.querySelectorAll('.transaction__remove');
-    transactions.forEach( (transaction) => {
-      transaction.onclick = () => {
-        this.removeTransaction(transaction.dataset.id)
+    this.element.addEventListener('click', del.bind(this));
+    // Окно confirm перехватывает выполнение скрипта и
+    // поэтому иногда нужно 2 раза кликать на Ок, Отмена или Esc
+
+    function del(e) {
+      const button = e.target.closest('button');
+      if (button.classList.contains('remove-account'))
+        this.removeAccount();
+      
+      if (button.classList.contains('transaction__remove')) {
+        console.log(e.target);
+        this.removeTransaction(button.dataset.id);
       }
     }
-    )
+
+
   }
 
   removeAccount() {
-    if (this.lastOptions) {
-      this.clear();
-      const userAgree = confirm('Are you sure?');
-      if (userAgree) {
-        Account.remove(this.lastOptions.account_id, '',
-          (err, response) => {
-            if (response) {
-              App.update();
-            }
-            else
-              console.log(err);
+    if (!this.lastOptions) 
+      return
+
+    const userAgree = confirm('Are you sure?');
+    if (userAgree) {
+      Account.remove(this.lastOptions.account_id, '',
+        (err, response) => {
+          if (response) {
+            App.update();
+            this.clear();
           }
-        );
-      }
+          else
+            console.log(err);
+        });
     }
   }
 
   removeTransaction( id ) {
     const userAgree = confirm('Are you sure?');
     if (userAgree) {
-      Transaction.remove(id, '', (err, response) => {
+      Transaction.remove(id, {}, (err, response) => {
         if (response) {
           this.update();
         }
         else
           console.log(err);
-        }
-      )
+      });
     }
   }
 
   render( options ) {
-    if (options) {
-      Account.get(options.account_id, '', 
-        (err, response) => {
-          if (response) {
-            this.renderTitle(response.data.name);
-          }
-          else
-            console.log(err);
-          }
-      );
-      Transaction.list(options,
-        (err, response) => {
-          this.renderTransactions(response.data);
-        });
-      this.lastOptions = options;
-    }
+    if (!options) 
+      return
+
+    Account.get(options.account_id, '', 
+      (err, response) => {
+        if (response) {
+          this.renderTitle(response.data.name);
+        }
+        else
+          console.log(err);
+        }
+    );
+    Transaction.list(options,
+      (err, response) => {
+        this.renderTransactions(response.data);
+      });
+    this.lastOptions = options;
   }
 
   clear() {

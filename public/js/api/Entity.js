@@ -14,7 +14,6 @@ class Entity {
   }
 
   static create( data, callback = f => f ) {
-    console.log(data);
     createRequest({
       method: 'POST',
       responseType: 'json',

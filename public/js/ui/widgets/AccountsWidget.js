@@ -11,16 +11,16 @@ class AccountsWidget {
   }
 
   registerEvents() {
-    const newAccount = this.element.querySelector('.create-account');
-    newAccount.addEventListener('click', () => {
-      App.getModal('createAccount').open();
-    })
+    this.element.addEventListener('click', accWigd.bind(this));
+  
 
-    const accounts = Array.from(this.element.querySelectorAll('.account'));
+    function accWigd(e) {
+      if (e.target.classList.contains('create-account'))
+        App.getModal('createAccount').open();
 
-    accounts.forEach( (account) => {
-      account.addEventListener('click', this.onSelectAccount );
-    } )
+      if (e.target.closest('li').classList.contains('account'))
+        this.onSelectAccount(e.target.closest('li'))
+    }
   }
 
   update() {
@@ -29,7 +29,6 @@ class AccountsWidget {
         if (response) {
           this.clear();
           this.renderItem(response.data);
-          this.registerEvents();
         }
         else
           console.log(err);
@@ -46,8 +45,13 @@ class AccountsWidget {
 
 
   onSelectAccount( element ) {
-    element.target.parentElement.classList.add('active');
-    App.showPage('transactions', {account_id: element.target.parentElement.dataset.id})
+    if (this.element.previousAccountSelected) 
+      this.element.previousAccountSelected.classList.remove('active');
+        
+    App.showPage('transactions', {account_id: element.dataset.id});
+    element.classList.add('active');
+
+    this.element.previousAccountSelected = element;
   }
 
   getAccountHTML( item ) {
